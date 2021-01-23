@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  </head>
+  <body>
+      <!--HERO------------------------------------------------------------->
+      <section class="hero is-primary">
+          <div class="hero-body">
+              <div class="container">
+                  <h1 class="title is-1">Hey Dude!</h1>
+                  <h2 class="subtile">Ask, and you shall receive...</h2>
+              </div>
+          </div>
+      </section>
+
+      <!--BAR----------------------------------------------------------->
+      <div class="columns">
+        <div class="column">
+          <p class="bd-notification is-info">LET'S GENERATE YOUR QR CODE</p>
+          <div class="columns is-mobile">
+            <div class="column" id="app">
+              <div>
+                  <input
+                    type="text"
+                    size="50"
+                    placeholder="What do you want to generate..."
+                    v-model="text"
+                  />
+              </div>
+            </div>
+            <div class="column">
+                <div v-if="text" class="output">
+                    <img :src="nreQRCode" alt="QRCode" />
+
+                </div>
+            </div>
+          </div>
+        </div>
+
+      <!--COLUMNS----------------------------------------------------------->
+
+ 
+  </body>
+</html>
