@@ -3,8 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
+    <title>What's up Dude!</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css" />
+
   </head>
   <body>
       <!--HERO------------------------------------------------------------->
@@ -17,31 +19,47 @@
           </div>
       </section>
 
-      <!--BAR----------------------------------------------------------->
-      <div class="columns">
-        <div class="column">
-          <p class="bd-notification is-info">LET'S GENERATE YOUR QR CODE</p>
-          <div class="columns is-mobile">
-            <div class="column" id="app">
-              <div>
-                  <input
-                    type="text"
-                    size="50"
-                    placeholder="What do you want to generate..."
-                    v-model="text"
-                  />
-              </div>
-            </div>
-            <div class="column">
-                <div v-if="text" class="output">
-                    <img :src="nreQRCode" alt="QRCode" />
-
-                </div>
+      <!--URL-------------------------------------------------------------->
+      <main>
+          <h1>Enter a URL to be shorten...</h1>
+          <div class="container is-fluid">
+            <div class="notification is-primary">
+              <input type="text" id="url-input" value="" placeholder="Enter URL">
+              <button id="shorten-button">Transform...</button>
             </div>
           </div>
+          <pre id="out">Your URL will appear here...</pre>
+  
+      <!--BAR-------------------------------------------------------------->
+        <div class="columns">
+            <div class="column">
+            <p class="bd-notification is-info">LET'S GENERATE YOUR QR CODE</p>
+            <div class="columns is-mobile">
+                <div class="column" id="app">
+                  <div>
+                      <input
+                        type="text"
+                        size="50"
+                        placeholder="What do you want to generate..."
+                        v-model="text"
+                    />
+                    </div>
+                </div>
+                    <div class="column">
+                        <div v-if="text" class="output">
+                        <img :src="nreQRCode" alt="QRCode" />
+                    </div>
+                </div>
+          </div>
         </div>
-
+    </main>
       <!--COLUMNS----------------------------------------------------------->
+
+
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="./assets/js/script.js"></script>
+
 
  
   </body>
