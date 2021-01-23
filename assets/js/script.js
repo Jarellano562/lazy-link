@@ -24,6 +24,7 @@ var encodeUrl = function(url){
 
 // accept user input, make request for shortened url
 // make request for qr code
+// append requested data to history as an object
 
 // display shortened link on page in header
 // display qr code in image under header
