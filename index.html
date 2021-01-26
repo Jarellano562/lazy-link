@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>What's up Dude!</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    
     <link rel="stylesheet" href="./assets/css/style.css" />
 
   </head>
@@ -24,43 +25,75 @@
           <h1>Enter a URL to be shorten...</h1>
           <div class="container is-fluid">
             <div class="notification is-primary">
-              <input type="text" id="url-input" value="" placeholder="Enter URL">
+              <input 
+                type="text" 
+                id="url-input" 
+                value="" 
+                placeholder="Enter URL"
+                />
               <button id="shorten-button">Transform...</button>
             </div>
           </div>
           <pre id="out">Your URL will appear here...</pre>
   
-      <!--BAR-------------------------------------------------------------->
-        <div class="columns">
-            <div class="column">
+      <!--QR CODE------------------------------------------------------------>
+    <div class="columns">
+        <div class="column">
             <p class="bd-notification is-info">LET'S GENERATE YOUR QR CODE</p>
             <div class="columns is-mobile">
-                <div class="column" id="app">
-                  <div>
-                      <input
-                        type="text"
-                        size="50"
-                        placeholder="What do you want to generate..."
-                        v-model="text"
-                    />
+                <div class="column">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="content">
+                                WHAT IS YOUR NEXT QR CODE?
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" size="60" maxlength="60" class="form-control" id="content"
+                                    placeholder="TYPE WHAT YOU WANT" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" class="btn btn-default" id="generate">
+                                    TRANSFORM
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                    <div class="column">
-                        <div v-if="text" class="output">
-                        <img :src="nreQRCode" alt="QRCode" />
-                    </div>
+                <div class="column">
+                    <p class="bd-notification is-info">YOUR GENERATED QR CODE</p>
+                    <center><img src="https://chart.googleapis.com/chart?cht=qr&chl=Hello+World&chs=160x160&chld=L|0"
+                        class="qr-code img-thumbnail img-responsive" /></center>
                 </div>
-          </div>
+            </div>
         </div>
+    
+        <script src="https://code.jquery.com/jquery-3.5.1.js">
+        </script>
+    
+        <script>
+            function htmlEncode(value) {
+                return $('<div/>').text(value)
+                    .html();
+            }
+
+            $(function () {
+            $('#generate').click(function () {  
+                let finalURL =
+                    'https://chart.googleapis.com/chart?cht=qr&chl=' +
+                    htmlEncode($('#content').val()) +
+                    '&chs=160x160&chld=L|0'
+
+                    $('.qr-code').attr('src', finalURL);
+                });
+            }); 
+        </script>
     </main>
-      <!--COLUMNS----------------------------------------------------------->
+    <!--END OF QR CODE----------------------------------------------------------->
 
 
-      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      <script src="./assets/js/script.js"></script>
-
-
- 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./assets/js/script.js"></script>
   </body>
 </html>
