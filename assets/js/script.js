@@ -1,4 +1,4 @@
-var history = {};
+var genHistory = [];
 var historyContainer = document.querySelector("#history");
 var transformForm = document.querySelector("#form");
 var idCounter = 0;
@@ -7,12 +7,22 @@ var generateLinks = function(event){
     event.preventDefault();
     var inputText = document.querySelector("input[id='url-input']").value;
     var originalLink = validateUrl(inputText);
-
+    
     var qrLink = getQrCode(originalLink);
-    var shortLink = getShortUrl(originalLink);
-    console.log(qrLink);
-    console.log(originalLink);
-    console.log(shortLink);
+    var shortLink = "";
+    getShortUrl(originalLink);
+    document.querySelector("input[id='url-input']").value = "";
+
+    setTimeout(function(){
+        shortLink = document.getElementById("generation").getAttribute("data-link");
+        console.log(qrLink);
+        console.log(originalLink);
+        console.log(shortLink);
+
+        renderLinkItems(shortLink, qrLink, originalLink);
+        saveData(idCounter, shortLink, qrLink, originalLink);
+        idCounter++;
+    }, 500);
 }
 
 var validateUrl = function(){
@@ -40,8 +50,8 @@ var getShortUrl = function(longUrl){
           return response;
       })
       .then(function(data){
-        shortenedUrl = JSON.stringify(data.link);
-        console.log(shortenedUrl);
+        shortenedUrl = data.link;
+        document.getElementById("generation").setAttribute("data-link", shortenedUrl);
       })
 }
 
@@ -54,17 +64,25 @@ var renderLinkItems = function(shortLink, qrLink, originalLink){
     // render qr code
     document.getElementById("qr").src = qrLink;
     // render shortened and original link
-    document.getElementById("shortlinktext").innerHTML("<a href='" + shortLink + "'>" + shortLink + "</a> (" + originalLink + ")");
+    document.getElementById("shortlinktext").innerHTML = "<a href='" + shortLink + "'>" + shortLink + "</a> (" + originalLink + ")";
 }
 
 // read data from localstorage
 // if data exists, import then append to history section
-var historyDataAdd = function(id, shortLink, qrLink){
+var historyDataAdd = function(id, shortLink, qrLink, originalLink){
   // render an item to the history
 }
 
-var saveData = function(id, shortLink, qrLink){
-  // add an item to the list and save to localstorage
+var saveData = function(id, shortLink, qrLink, originalLink){
+  var dataObj = {
+      id: id,
+      shortLink: shortLink,
+      qrLink: qrLink,
+      originalLink: originalLink
+  };
+  genHistory.push(dataObj);
+  localStorage.setItem("genHistory", JSON.stringify(genHistory));
+  console.log(JSON.parse(localStorage.getItem("genHistory")));
 }
 
 var deleteDataItem = function(id){
@@ -76,5 +94,4 @@ var deleteDataItem = function(id){
 
 // display shortened link on page in header
 // display qr code in image under header
-console.log(transformForm);
 transformForm.addEventListener("submit", generateLinks);
