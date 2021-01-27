@@ -3,47 +3,52 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
+    <title>Lazy Link</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <script src="./assets/js/script.js"></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+
   </head>
   <body>
       <!--HERO------------------------------------------------------------->
       <section class="hero is-primary">
           <div class="hero-body">
               <div class="container">
-                  <h1 class="title is-1">Hey Dude!</h1>
-                  <h2 class="subtile">Ask, and you shall receive...</h2>
+                  <h1 class="title is-1">Lazy Link</h1>
+                  <h2 class="subtile">Gives you an easy (and lazy) way to share long links. Simply enter your URL and let Lazy Link take care of the rest!</h2>
               </div>
           </div>
       </section>
 
-      <!--BAR----------------------------------------------------------->
-      <div class="columns">
+      <!--URL-------------------------------------------------------------->
+      <main>
+          <h1>This is where the magic happens!</h1>
+          <div class="container is-fluid">
+            <form class="notification is-primary" id="form">
+              <input type="text" id="url-input" value="" placeholder="Enter URL" />
+              <button id="transform-button" name="transform" type="submit">Transform</button>
+            </form>
+          </div>
+  
+      <!--QR CODE------------------------------------------------------------>
+    <div class="columns">
         <div class="column">
-          <p class="bd-notification is-info">LET'S GENERATE YOUR QR CODE</p>
-          <div class="columns is-mobile">
-            <div class="column" id="app">
-              <div>
-                  <input
-                    type="text"
-                    size="50"
-                    placeholder="What do you want to generate..."
-                    v-model="text"
-                  />
-              </div>
-            </div>
-            <div class="column">
-                <div v-if="text" class="output">
-                    <img :src="nreQRCode" alt="QRCode" />
-
+            <div class="columns is-mobile">
+                <div class="column">
+                    <pre id="out" style="text-align: center;">Your generation history:</pre>
+                    <div class="form-horizontal" id="history">
+                        <!-- add history -->
+                    </div>
+                </div>
+                <div class="column">
+                    <pre id="out" style="text-align: center;">Your URL and QR code will appear here</pre>
+                    <p class="bd-notification is-info" id="shortlinktext"></p>
+                    <center><img id="qr" src="" class="qr-code img-thumbnail img-responsive" /></center>
                 </div>
             </div>
-          </div>
         </div>
+    </main>
+    <!--END OF QR CODE----------------------------------------------------------->
 
-      <!--COLUMNS----------------------------------------------------------->
-
- 
+    <script src="./assets/js/script.js"></script>
   </body>
 </html>
