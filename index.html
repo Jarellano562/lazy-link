@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Lazy Link</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css" />
+
+  </head>
+  <body>
+      <!--HERO------------------------------------------------------------->
+      <section class="hero is-primary">
+          <div class="hero-body">
+              <div class="container">
+                  <h1 class="title is-1">Lazy Link</h1>
+                  <h2 class="subtile" style="text-align: center;">Gives you an easy (and lazy) way to share long links. Simply enter your URL and let Lazy Link take care of the rest!</h2>
+              </div>
+          </div>
+      </section>
+
+      <!--URL-------------------------------------------------------------->
+      <main>
+          <h1>This is where the magic happens!</h1>
+          <div class="container is-fluid">
+            <form class="notification is-primary" id="form">
+              <input class="input" type="text" id="url-input" value="" placeholder="Enter URL" />
+              <button class="button is-info" id="transform-button" name="transform" type="submit">Transform</button>
+            </form>
+          </div>
+  
+      <!--QR CODE------------------------------------------------------------>
+    <div class="columns">
+        <div class="column">
+            <div class="columns is-mobile">
+                <div class="column">
+                    <pre id="out" style="text-align: center;">Your generation history</pre>
+                    <ul class="form-horizontal" id="history">
+                        <!-- add history -->
+                    </ul>
+                </div>
+                <div class="column" id="generation" data-link="">
+                    <pre id="out" style="text-align: center;">Your URL and QR code will appear here</pre>
+                    <p class="bd-notification is-info" id="shortlinktext"></p>
+                    <center><img id="qr" src="" class="qr-code img-thumbnail img-responsive" /></center>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--END OF QR CODE----------------------------------------------------------->
+
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>

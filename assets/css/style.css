@@ -1,0 +1,47 @@
+* {
+    box-sizing: border-box;
+    margin: 7px;
+    padding: 0px;
+}
+
+.hero.is-primary {
+    background-color: #eeff00;
+    color: rgb(0, 0, 0);
+}
+
+.hero.is-primary .title {
+    color: rgb(1, 1, 1);
+}
+
+.hero {
+    padding: 15px;
+    margin: 15px;
+}
+
+.bd-notification {
+    padding: 15px;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+.notification.is-primary {
+    background-color: #eeff00;
+    color: #fff;
+    text-align: center;
+}
+
+.qr-code {
+    text-align: center;
+}
+
+.history-li {
+    display: flex;
+    margin: 5px 0 5px 0;
+}
+
+.history-li-info{
+    flex-grow: 3;
+}
