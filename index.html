@@ -14,7 +14,7 @@
           <div class="hero-body">
               <div class="container">
                   <h1 class="title is-1">Lazy Link</h1>
-                  <h2 class="subtile">Gives you an easy (and lazy) way to share long links. Simply enter your URL and let Lazy Link take care of the rest!</h2>
+                  <h2 class="subtile" style="text-align: center;">Gives you an easy (and lazy) way to share long links. Simply enter your URL and let Lazy Link take care of the rest!</h2>
               </div>
           </div>
       </section>
@@ -24,8 +24,8 @@
           <h1>This is where the magic happens!</h1>
           <div class="container is-fluid">
             <form class="notification is-primary" id="form">
-              <input type="text" id="url-input" value="" placeholder="Enter URL" />
-              <button id="transform-button" name="transform" type="submit">Transform</button>
+              <input class="input" type="text" id="url-input" value="" placeholder="Enter URL" />
+              <button class="button is-info" id="transform-button" name="transform" type="submit">Transform</button>
             </form>
           </div>
   
@@ -34,10 +34,10 @@
         <div class="column">
             <div class="columns is-mobile">
                 <div class="column">
-                    <pre id="out" style="text-align: center;">Your generation history:</pre>
-                    <div class="form-horizontal" id="history">
+                    <pre id="out" style="text-align: center;">Your generation history</pre>
+                    <ul class="form-horizontal" id="history">
                         <!-- add history -->
-                    </div>
+                    </ul>
                 </div>
                 <div class="column" id="generation" data-link="">
                     <pre id="out" style="text-align: center;">Your URL and QR code will appear here</pre>

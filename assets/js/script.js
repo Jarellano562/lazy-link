@@ -1,7 +1,8 @@
-var genHistory = [];
 var historyContainer = document.querySelector("#history");
 var transformForm = document.querySelector("#form");
 var idCounter = 0;
+
+// localStorage.setItem("genHistory", []); 
 
 var generateLinks = function(event){
     event.preventDefault();
@@ -21,6 +22,7 @@ var generateLinks = function(event){
 
         renderLinkItems(shortLink, qrLink, originalLink);
         saveData(idCounter, shortLink, qrLink, originalLink);
+        historyDataAdd(idCounter, shortLink, qrLink, originalLink);
         idCounter++;
     }, 500);
 }
@@ -70,7 +72,33 @@ var renderLinkItems = function(shortLink, qrLink, originalLink){
 // read data from localstorage
 // if data exists, import then append to history section
 var historyDataAdd = function(id, shortLink, qrLink, originalLink){
-  // render an item to the history
+  var historyEl = document.createElement("li");
+  historyEl.className = "history-li";
+  historyEl.setAttribute("data-id", id);
+  historyEl.setAttribute("data-shortLink", shortLink);
+  historyEl.setAttribute("data-qrLink", qrLink);
+  historyEl.setAttribute("data-originalLink", originalLink);
+
+  var historyInfoEl = document.createElement("div");
+  historyInfoEl.className = "history-li-info";
+  historyInfoEl.innerHTML = "<h3>" + originalLink + "</h3>";
+  historyEl.appendChild(historyInfoEl);
+
+  var historyLoadBtn = document.createElement("button");
+  historyLoadBtn.textContent = "Load";
+  historyLoadBtn.className = "button is-success";
+  historyLoadBtn.setAttribute("id", "loadButton");
+  historyLoadBtn.setAttribute("data-id", id);
+  historyEl.appendChild(historyLoadBtn);
+
+  var historyDeleteBtn = document.createElement("button");
+  historyDeleteBtn.textContent = "Delete";
+  historyDeleteBtn.className = "button is-danger";
+  historyDeleteBtn.setAttribute("id", "deleteButton");
+  historyDeleteBtn.setAttribute("data-id", id);
+  historyEl.appendChild(historyDeleteBtn);
+
+  historyContainer.appendChild(historyEl);
 }
 
 var saveData = function(id, shortLink, qrLink, originalLink){
@@ -85,8 +113,33 @@ var saveData = function(id, shortLink, qrLink, originalLink){
   console.log(JSON.parse(localStorage.getItem("genHistory")));
 }
 
-var deleteDataItem = function(id){
-  // delete an item from the list and localstorage
+var deleteDataItem = function(event){
+  if (event.target.matches("#deleteButton")){
+    var itemId = parseInt(event.target.getAttribute("data-id"));
+    var selectedHistory = document.querySelector("li[data-id='" + itemId + "']")
+    selectedHistory.remove();
+
+    var updateHistory = [];
+    for (var i = 0; i < genHistory.length; i++){
+      if (genHistory[i].id !== itemId){
+        updateHistory.push(genHistory[i]);
+      }
+    }
+    genHistory = updateHistory;
+    localStorage.setItem("genHistory", JSON.stringify(genHistory))
+    console.log(genHistory);
+  }
+}
+
+var loadHandler = function(event){
+  if (event.target.matches("#loadButton")){
+    var itemId = parseInt(event.target.getAttribute("data-id"));
+    loadLi = document.querySelector("li[data-id='" + itemId + "']");
+    loadShort = loadLi.getAttribute("data-shortLink");
+    loadQr = loadLi.getAttribute("data-qrLink");
+    loadOriginal = loadLi.getAttribute("data-originalLink");
+    renderLinkItems(loadShort, loadQr, loadOriginal);
+  }
 }
 // accept user input, make request for shortened url
 // make request for qr code
@@ -94,4 +147,22 @@ var deleteDataItem = function(id){
 
 // display shortened link on page in header
 // display qr code in image under header
+
+// if history exists in localstorage, retrive it and render
+if (localStorage.getItem("genHistory")){
+  var genHistory = JSON.parse(localStorage.getItem("genHistory"));
+
+  for(var i = 0; i < genHistory.length; i++){
+    genHistory[i].id = i;
+    historyDataAdd(i, genHistory[i].shortLink, genHistory[i].qrLink, genHistory[i].originalLink);
+  }
+  localStorage.setItem("genHistory", JSON.stringify(genHistory));
+  idCounter = genHistory.length;
+} else {
+  var genHistory = [];
+}
+console.log(genHistory);
+
 transformForm.addEventListener("submit", generateLinks);
+historyContainer.addEventListener("click", deleteDataItem);
+historyContainer.addEventListener("click", loadHandler);

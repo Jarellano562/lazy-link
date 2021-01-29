@@ -35,5 +35,13 @@ h1 {
 
 .qr-code {
     text-align: center;
+}
 
+.history-li {
+    display: flex;
+    margin: 5px 0 5px 0;
+}
+
+.history-li-info{
+    flex-grow: 3;
 }
