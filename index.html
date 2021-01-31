@@ -4,8 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>What's up Dude!</title>
+
+    <!--INCLUDED THE BULMA STYLESHEET-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    
     <link rel="stylesheet" href="./assets/css/style.css" />
 
   </head>
@@ -63,6 +64,9 @@
                 </div>
                 <div class="column">
                     <p class="bd-notification is-info">YOUR GENERATED QR CODE</p>
+                    <!--THE PLACEHOLDER FOR THE IMAGE
+                        THIS WILL CHANGE ACCORDING TO
+                        THE DATA ENTERED LATER-->
                     <center><img src="https://chart.googleapis.com/chart?cht=qr&chl=Hello+World&chs=160x160&chld=L|0"
                         class="qr-code img-thumbnail img-responsive" /></center>
                 </div>
@@ -73,22 +77,35 @@
         </script>
     
         <script>
+//INPUTTED THE JS INTO THE HTML
+//SO THAT WE HAVE TWO JS AND DONT 
+//MIX UP THE QR CODE OR URL SHORTNER 
+
+//THIS IS A HIDDEN ELEMENT THAT IS INSERTED 
+//THIS BE OUTPUT IT TO OUR HTML PAGE 
             function htmlEncode(value) {
                 return $('<div/>').text(value)
                     .html();
             }
-
+//THIS IS A CLICK FUNCTION 
+//THIS IS LINKED TO THE BUTTON "GENERATE"
             $(function () {
             $('#generate').click(function () {  
+//THIS IS THE GOOGLE API I FOUND FOR QR CODES                 
+                
                 let finalURL =
                     'https://chart.googleapis.com/chart?cht=qr&chl=' +
                     htmlEncode($('#content').val()) +
                     '&chs=160x160&chld=L|0'
-
+//THIS WILL REPLACE THE IMAGE 
+//WITH THE ACTUAL QR CODE THAT 
+//THE USER WANTS TO MAKE A QR CODE 
                     $('.qr-code').attr('src', finalURL);
                 });
             }); 
-        </script>
+//THIS IS THE END OF THE QR CODE 
+//HAYDEN --- LET ME KNOW IF THIS WORKS ON YOUR END????            
+        </script>        
     </main>
     <!--END OF QR CODE----------------------------------------------------------->
 
