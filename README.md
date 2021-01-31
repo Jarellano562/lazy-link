@@ -17,7 +17,7 @@ My marketing efforts include posting my website/QR code everywhere
 ### WHY THIS APP
 
 ```text
-It is free and if that is not a good enough reason well here are some more.... 
+It's free and if that's not a good enough reason well here are some more.... 
 This application will help users take long URLs (which can be long) and transform
 them into a manageable link. This is the same ideology behind QR Codes.
 - It saves space when displayed/printed/message or tweeting 
