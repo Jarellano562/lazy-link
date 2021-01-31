@@ -45,3 +45,7 @@ h1 {
 .history-li-info{
     flex-grow: 3;
 }
+
+.transformbtn {
+    margin-top: 15px;
+}

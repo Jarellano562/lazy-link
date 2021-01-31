@@ -2,8 +2,7 @@ var historyContainer = document.querySelector("#history");
 var transformForm = document.querySelector("#form");
 var idCounter = 0;
 
-// localStorage.setItem("genHistory", []); 
-
+// create the qr and shortened url from user input
 var generateLinks = function(event){
     event.preventDefault();
     var inputText = document.querySelector("input[id='url-input']").value;
@@ -14,12 +13,9 @@ var generateLinks = function(event){
     getShortUrl(originalLink);
     document.querySelector("input[id='url-input']").value = "";
 
+    // weird workaround for getting the returned value from the bit.ly api response object since i don't know how to use asynchronous functions yet
     setTimeout(function(){
         shortLink = document.getElementById("generation").getAttribute("data-link");
-        console.log(qrLink);
-        console.log(originalLink);
-        console.log(shortLink);
-
         renderLinkItems(shortLink, qrLink, originalLink);
         saveData(idCounter, shortLink, qrLink, originalLink);
         historyDataAdd(idCounter, shortLink, qrLink, originalLink);
@@ -27,6 +23,7 @@ var generateLinks = function(event){
     }, 500);
 }
 
+// checks whether or not the url starts with the proper http prefix, if not add it
 var validateUrl = function(){
     var url = document.getElementById("url-input").value;
     var protocol_ok = url.startsWith("http://") || url.startsWith("https://") || url.startsWith("ftp://");
@@ -38,6 +35,7 @@ var validateUrl = function(){
         }
 }
 
+// fetch a shortened url from the bit.ly api
 var getShortUrl = function(longUrl){
     fetch("https://api-ssl.bitly.com/v4/shorten", {
       method: "POST",
@@ -53,24 +51,26 @@ var getShortUrl = function(longUrl){
       })
       .then(function(data){
         shortenedUrl = data.link;
+        // used an html data attribute to temporarily store the shortened link to get around using an asynchronous function to retrieve the value
         document.getElementById("generation").setAttribute("data-link", shortenedUrl);
       })
 }
 
+// generate the qr code image link to be displayed
 var getQrCode = function(url){
     qrLink = "https://qrtag.net/api/qr.png?url=" + url;
     return qrLink;
 }
 
+// display the data received
 var renderLinkItems = function(shortLink, qrLink, originalLink){
     // render qr code
     document.getElementById("qr").src = qrLink;
     // render shortened and original link
-    document.getElementById("shortlinktext").innerHTML = "<a href='" + shortLink + "'>" + shortLink + "</a> (" + originalLink + ")";
+    document.getElementById("shortlinktext").innerHTML = "<a href='" + shortLink + "' target='_blank'>" + shortLink + "</a> (" + originalLink + ")";
 }
 
-// read data from localstorage
-// if data exists, import then append to history section
+// create the list item that contains previously generated links and qr codes
 var historyDataAdd = function(id, shortLink, qrLink, originalLink){
   var historyEl = document.createElement("li");
   historyEl.className = "history-li";
@@ -79,11 +79,13 @@ var historyDataAdd = function(id, shortLink, qrLink, originalLink){
   historyEl.setAttribute("data-qrLink", qrLink);
   historyEl.setAttribute("data-originalLink", originalLink);
 
+  // create the div that will house the info
   var historyInfoEl = document.createElement("div");
   historyInfoEl.className = "history-li-info";
   historyInfoEl.innerHTML = "<h3>" + originalLink + "</h3>";
   historyEl.appendChild(historyInfoEl);
 
+  // create load button
   var historyLoadBtn = document.createElement("button");
   historyLoadBtn.textContent = "Load";
   historyLoadBtn.className = "button is-success";
@@ -91,6 +93,7 @@ var historyDataAdd = function(id, shortLink, qrLink, originalLink){
   historyLoadBtn.setAttribute("data-id", id);
   historyEl.appendChild(historyLoadBtn);
 
+  // create delete button
   var historyDeleteBtn = document.createElement("button");
   historyDeleteBtn.textContent = "Delete";
   historyDeleteBtn.className = "button is-danger";
@@ -98,9 +101,11 @@ var historyDataAdd = function(id, shortLink, qrLink, originalLink){
   historyDeleteBtn.setAttribute("data-id", id);
   historyEl.appendChild(historyDeleteBtn);
 
+  // add the history to the list
   historyContainer.appendChild(historyEl);
 }
 
+// adds a recently converted link to the history and localstorage
 var saveData = function(id, shortLink, qrLink, originalLink){
   var dataObj = {
       id: id,
@@ -110,15 +115,17 @@ var saveData = function(id, shortLink, qrLink, originalLink){
   };
   genHistory.push(dataObj);
   localStorage.setItem("genHistory", JSON.stringify(genHistory));
-  console.log(JSON.parse(localStorage.getItem("genHistory")));
 }
 
+// handles the button for deleting a history item
 var deleteDataItem = function(event){
   if (event.target.matches("#deleteButton")){
+    // remove the list item from the html
     var itemId = parseInt(event.target.getAttribute("data-id"));
     var selectedHistory = document.querySelector("li[data-id='" + itemId + "']")
     selectedHistory.remove();
 
+    // update the localstorage to reflect deleted item
     var updateHistory = [];
     for (var i = 0; i < genHistory.length; i++){
       if (genHistory[i].id !== itemId){
@@ -127,7 +134,6 @@ var deleteDataItem = function(event){
     }
     genHistory = updateHistory;
     localStorage.setItem("genHistory", JSON.stringify(genHistory))
-    console.log(genHistory);
   }
 }
 
@@ -141,17 +147,12 @@ var loadHandler = function(event){
     renderLinkItems(loadShort, loadQr, loadOriginal);
   }
 }
-// accept user input, make request for shortened url
-// make request for qr code
-// append requested data to history as an object
 
-// display shortened link on page in header
-// display qr code in image under header
-
-// if history exists in localstorage, retrive it and render
+// if history exists in localstorage, retrieve it. if not, assign empty array
 if (localStorage.getItem("genHistory")){
   var genHistory = JSON.parse(localStorage.getItem("genHistory"));
 
+  // makes sure the id's of the history items start from 0 and ascend in order and add to the html
   for(var i = 0; i < genHistory.length; i++){
     genHistory[i].id = i;
     historyDataAdd(i, genHistory[i].shortLink, genHistory[i].qrLink, genHistory[i].originalLink);
@@ -161,7 +162,6 @@ if (localStorage.getItem("genHistory")){
 } else {
   var genHistory = [];
 }
-console.log(genHistory);
 
 transformForm.addEventListener("submit", generateLinks);
 historyContainer.addEventListener("click", deleteDataItem);
