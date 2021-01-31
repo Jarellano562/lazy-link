@@ -4,7 +4,7 @@
 
 ### DESCRIPTION 
 
-This is a new free project that the Dudes create to help the average mom and pop business. Due to these testing times because of the COVID19 pandemic it is safe to say that no one wants to get the infection. But how does one promote their business and still stay safe from the VID. It is easy with our new generated URL shortner and QR code - you’ll be able to promote your business easier and safely.
+This is a new free project that the Dudes create to help the average mom and pop businesses. Due to these testing times because of the COVID19 pandemic it is safe to say that no one wants to get the infection. But how does one promote their business and still stay safe from the VID. It is easy with our new generated URL shortner and QR code - you’ll be able to promote your business easier and safely.
 
 ### USER STORY 
 
